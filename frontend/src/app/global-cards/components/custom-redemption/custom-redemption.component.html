@@ -1,0 +1,72 @@
+<div class="container" *ngIf="investiment">
+
+  <div class="titles">DADOS DO INVESTIMENTOS</div>
+  <div class="data-table" *ngIf="redemptions">
+    <div class="row">
+      <div class="col-4">
+        <label class="mb-2 header">NOME</label>
+        <p>{{ redemptions.nome }}</p>
+      </div>
+      <div class="col-4">
+        <label class="mb-2 header">OBJETIVO</label>
+        <p>{{ redemptions.objetivo }}</p>
+      </div>
+      <div class="col-4">
+        <label class="mb-2 header">SALDO TOTAL</label>
+        <p>{{ redemptions.saldoTotal | currency : 'BRL' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="titles">RESGATE</div>
+  <form [formGroup]="form">
+    <div class="data-table">
+      <div class="row mb-2 header">
+        <div class="col-4">AÇÃO</div>
+        <div class="col-4">SALDO ACUMULADO</div>
+        <div class="col-4">VALOR A RESGATAR</div>
+      </div>
+      <ng-container formArrayName="investValue">
+        <ng-container *ngIf="getFormInvestiment() && getFormInvestiment().controls.length > 0">
+          <div class="row" *ngFor="let item of getFormInvestiment().controls; index as i">
+            <ng-container [formGroup]="getFormControl(item)">
+              <div class="col-4">
+                <p class="mt-1">{{ getFormControl(item).controls['name'].value }}</p>
+              </div>
+              <div class="col-4">
+                <p class="mt-1">{{ getFormControl(item).controls['accumulatedBalance'].value | currency : 'BRL' }}</p>
+              </div>
+              <div class="col-4">
+                <input class="mt-1 form-control" type="text" formControlName="value" (ngModelChange)="totalRedemption()"
+                  placeholder="Digite quanto quer resgatar" currencyMask
+                  [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false}">
+                <div class="error-msg mt-1" *ngIf="getFormControl(item).controls['value']?.errors">
+                  O valor a resgatar não pode ser maior que {{ getFormControl(item).controls['accumulatedBalance'].value
+                  | currency : 'BRL' }}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+
+  <ng-container>
+    <div class="data-table">
+      <div class="row">
+        <div class="col-12">
+          <label class="header">Valor total do resgate:</label>
+          <span> {{ totalRedemptions | currency : 'BRL' }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="pt-3">
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-light cancel" (click)="cancel()">CANCELAR</button>
+      <button class="btn btn-primary" (click)="redemption()" [disabled]="!totalRedemptions">CONFIRMAR RESGATE</button>
+    </div>
+  </div>
+</div>

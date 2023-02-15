@@ -1,0 +1,34 @@
+.container {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  padding: 0px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #EBEFF1;
+  border-top: 3px solid #2E5C63;
+
+  .titles {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+
+.data-table {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(167, 167, 167);
+  border-radius: 8px;
+  padding: 10px 30px;
+  background-color: #fff;
+}

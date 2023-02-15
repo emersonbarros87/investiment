@@ -1,0 +1,16 @@
+<ng-container *ngIf="formGroup">
+	<div mat-dialog-title class="mt-3 text-center title">DADOS INVÁLIDOS!</div>
+	<div mat-dialog-content>
+		Você preencheu um ou mais campos com um valor acima do permitido:
+	</div>
+	<div class="text-center" *ngFor="let item of getFormInvestiment().controls; index as i" >
+			<span>
+				{{ getFormControl(item).controls['name'].value }}:
+			</span>
+			O valor a resgatar não pode ser maior que
+			{{ getFormControl(item).controls['accumulatedBalance'].value | currency :'BRL' }}
+		</div>
+		<div mat-dialog-actions class="d-flex justify-content-center mb-3">
+			<button mat-dialog-close class="btn btn-primary" (click)="dialogError()">Corrigir</button>
+	</div>
+</ng-container>
